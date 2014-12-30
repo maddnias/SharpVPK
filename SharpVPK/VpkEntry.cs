@@ -13,6 +13,7 @@ namespace SharpVPK
         public string Path { get; set; }
         public string Filename { get; set; }
         public byte[] PreloadData { get { return ReadPreloadData(); }}
+        public byte[] Data { get { return ReadData(); } }
         public bool HasPreloadData { get; set; }
 
         internal uint CRC;
@@ -59,5 +60,22 @@ namespace SharpVPK
             }
             return null;
         }
+
+        private byte[] ReadData()
+        {
+            var partFile = ParentArchive.Parts.FirstOrDefault(part => part.Index == ArchiveIndex);
+            if(partFile == null)
+                return null;
+            if (HasPreloadData)
+                return ReadPreloadData();
+            var buff = new byte[EntryLength];
+            using (var fs = new FileStream(partFile.Filename, FileMode.Open, FileAccess.Read))
+            {
+                fs.Seek(EntryOffset, SeekOrigin.Begin);
+                fs.Read(buff, 0, buff.Length);
+            }
+            return buff;
+        }
+
     }
 }
