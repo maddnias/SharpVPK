@@ -17,3 +17,7 @@ Example usage
     Console.WriteLine("Done");
     Console.ReadLine();
 ```
+
+which will return something similar to
+
+![Image of Yaktocat](http://puu.sh/dQswx/af4843c5c7.png)
