@@ -1,4 +1,6 @@
 ﻿using System.Runtime.InteropServices;
+using System.Collections.Generic;
+using System.Linq;
 using SharpVPK.V1;
 
 namespace SharpVPK.V2
@@ -17,8 +19,7 @@ namespace SharpVPK.V2
             // skip unknown values
             Reader.ReadInt32();
             var hdr = BytesToStructure<VpkArchiveHeaderV2>(hdrBuff);
-            hdr.FooterLength = Reader.ReadUInt32();
-            Reader.ReadInt32();
+            hdr.FooterLength = (uint)Reader.ReadInt32();
             Reader.ReadInt32();
             return hdr;
         }
