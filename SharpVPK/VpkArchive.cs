@@ -48,7 +48,7 @@ namespace SharpVPK
                 if (file.Split('_')[0] != fileBaseName || file == filename)
                     continue;
                 var fi = new FileInfo(file);
-                var partIdx = Int32.Parse(file.Split('_')[1].Split('.')[0]);
+                var partIdx = Int32.Parse(file.Split('_')[file.Split('_').Length - 1].Split('.')[0]);
                 Parts.Add(new ArchivePart((uint)fi.Length, partIdx, file));
             }
             Parts.Add(new ArchivePart((uint) new FileInfo(filename).Length, -1, filename));
