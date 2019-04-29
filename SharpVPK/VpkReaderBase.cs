@@ -23,7 +23,7 @@ namespace SharpVPK
         {
             _strBuilder.Clear();
             char chr;
-            while ((chr = Reader.ReadChar()) != 0x0)
+            while ((chr = (char)Reader.ReadByte()) != 0x0)
                 _strBuilder.Append(chr);
             return _strBuilder.ToString();
         }
