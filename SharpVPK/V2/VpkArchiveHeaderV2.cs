@@ -20,7 +20,7 @@
 
         public bool Verify()
         {
-            return Signature == StaticSignature && Version == 1;
+            return Signature == StaticSignature && Version == 2;
         }
 
         public uint CalculateDataOffset()
