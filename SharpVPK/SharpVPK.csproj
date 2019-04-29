@@ -51,6 +51,7 @@
     <Compile Include="VpkEntry.cs" />
     <Compile Include="VpkReaderBase.cs" />
     <Compile Include="V1\VpkReaderV1.cs" />
+    <Compile Include="VpkVersions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

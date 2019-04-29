@@ -23,13 +23,16 @@ namespace SharpVPK
             Directories = new List<VpkDirectory>();
         }
 
-        public void Load(string filename)
+        public void Load(string filename, VpkVersions.Versions version = VpkVersions.Versions.V1)
         {
             ArchivePath = filename;
             IsMultiPart = filename.EndsWith("_dir.vpk");
             if (IsMultiPart)
                 LoadParts(filename);
-            _reader = new VpkReaderV1(filename);
+            if (version == VpkVersions.Versions.V1)
+                _reader = new VpkReaderV1(filename);
+            else if (version == VpkVersions.Versions.V2)
+                _reader = new V2.VpkReaderV2(filename);
             var hdr = _reader.ReadArchiveHeader();
             if (!hdr.Verify())
                 throw new ArchiveParsingException("Invalid archive header");
