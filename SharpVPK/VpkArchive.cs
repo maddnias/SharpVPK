@@ -39,6 +39,18 @@ namespace SharpVPK
             Directories.AddRange(_reader.ReadDirectories(this));
         }
 
+        public void Load(byte[] file, VpkVersions.Versions version = VpkVersions.Versions.V1)
+        {
+            if (version == VpkVersions.Versions.V1)
+                _reader = new VpkReaderV1(file);
+            else if (version == VpkVersions.Versions.V2)
+                _reader = new V2.VpkReaderV2(file);
+            var hdr = _reader.ReadArchiveHeader();
+            if (!hdr.Verify())
+                throw new ArchiveParsingException("Invalid archive header");
+            Directories.AddRange(_reader.ReadDirectories(this));
+        }
+
         private void LoadParts(string filename)
         {
             Parts = new List<ArchivePart>();
@@ -48,7 +60,8 @@ namespace SharpVPK
                 if (file.Split('_')[0] != fileBaseName || file == filename)
                     continue;
                 var fi = new FileInfo(file);
-                var partIdx = Int32.Parse(file.Split('_')[file.Split('_').Length - 1].Split('.')[0]);
+                string[] spl = file.Split('_');
+                var partIdx = Int32.Parse(spl[spl.Length - 1].Split('.')[0]);
                 Parts.Add(new ArchivePart((uint)fi.Length, partIdx, file));
             }
             Parts.Add(new ArchivePart((uint) new FileInfo(filename).Length, -1, filename));

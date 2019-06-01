@@ -17,6 +17,12 @@ namespace SharpVPK
             _strBuilder = new StringBuilder(256);
         }
 
+        protected VpkReaderBase(byte[] file)
+        {
+            Reader = new BinaryReader(new MemoryStream(file));
+            _strBuilder = new StringBuilder(256);
+        }
+
         public abstract IVpkArchiveHeader ReadArchiveHeader();
 
         public string ReadNullTerminatedString()
@@ -39,6 +45,7 @@ namespace SharpVPK
             return @struct;
         }
 
+        #region default
         public IEnumerable<VpkDirectory> ReadDirectories(VpkArchive parentArchive)
         {
             while (true)
@@ -77,9 +84,10 @@ namespace SharpVPK
                 if (preloadBytes > 0) 
                     Reader.BaseStream.Position += preloadBytes;
 
-                yield return new VpkEntry(parentArchive, crc, preloadBytes, preloadDataOffset, archiveIdx, entryOffset, entryLen, ext, path, fileName);
+                yield return new VpkEntry(parentArchive, crc, preloadBytes, preloadDataOffset, archiveIdx, entryOffset, entryLen, ext.ToLower(), path.ToLower(), fileName.ToLower());
             }
         }
+        #endregion
 
         public abstract uint CalculateEntryOffset(uint offset);
     }

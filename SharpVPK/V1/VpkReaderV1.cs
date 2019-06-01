@@ -9,6 +9,10 @@ namespace SharpVPK.V1
             : base(filename)
         {
         }
+        public VpkReaderV1(byte[] file)
+            : base(file)
+        {
+        }
 
         public override IVpkArchiveHeader ReadArchiveHeader()
         {

@@ -12,6 +12,11 @@ namespace SharpVPK.V2
         {
         }
 
+        public VpkReaderV2(byte[] file)
+            : base(file)
+        {
+        }
+
         public override IVpkArchiveHeader ReadArchiveHeader()
         {
             var hdrStructSize = Marshal.SizeOf(typeof(VpkArchiveHeaderV2));

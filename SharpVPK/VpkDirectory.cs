@@ -16,7 +16,7 @@ namespace SharpVPK
         internal VpkDirectory(VpkArchive parentArchive, string path, List<VpkEntry> entries)
         {
             ParentArchive = parentArchive;
-            Path = path;
+            Path = path.ToLower();
             Entries = entries;
         }
     }
