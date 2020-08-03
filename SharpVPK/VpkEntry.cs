@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharpVPK
 {
@@ -12,7 +8,7 @@ namespace SharpVPK
         public string Extension { get; set; }
         public string Path { get; set; }
         public string Filename { get; set; }
-        public byte[] PreloadData { get { return ReadPreloadData(); }}
+        public byte[] PreloadData { get { return ReadPreloadData(); } }
         public byte[] Data { get { return ReadData(); } }
         public bool HasPreloadData { get; set; }
 
@@ -64,7 +60,7 @@ namespace SharpVPK
         private byte[] ReadData()
         {
             var partFile = ParentArchive.Parts.FirstOrDefault(part => part.Index == ArchiveIndex);
-            if(partFile == null)
+            if (partFile == null)
                 return null;
             if (HasPreloadData)
                 return ReadPreloadData();
@@ -76,6 +72,8 @@ namespace SharpVPK
             }
             return buff;
         }
+
+        public byte[] AnyData { get { if (this.HasPreloadData) return this.ReadPreloadData(); else return this.ReadData(); } }
 
     }
 }
